@@ -1,5 +1,6 @@
 import express from 'express';
 import db from './config/database.js';
+import models from './models/models.js';
 
 const server = express();
 server.use(express.json());
