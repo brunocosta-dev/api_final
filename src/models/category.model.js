@@ -9,7 +9,7 @@ const Category = db.define('category', {
 });
 
 Category.associate = (models) =>{
-    Category.hasMany(models.Component,{foreignKey: 'id_category', as: 'components'})
+    Category.hasMany(models.Components,{foreignKey: 'id_category', as: 'components'})
 }
 
 export default Category;
