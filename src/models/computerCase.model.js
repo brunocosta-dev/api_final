@@ -3,7 +3,7 @@ import db from '../config/database.js';
 
 const Gabinete = db.define('gabinete', {
     id_gabinete:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    desc_gabinete: {type: DataTypes.STRING(100), allowNull:false, unique: true},
+    nome_gabinete: {type: DataTypes.STRING(100), allowNull:false, unique: true},
 },{
     freezeTableName:true
 });

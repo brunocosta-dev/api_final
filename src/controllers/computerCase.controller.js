@@ -26,7 +26,7 @@ export async function searchNameGabinete(req,res) {
     try{
         
         const {nome} = req.params;
-        const consultarGabinete = await Gabinete.findAll({where:{nome_Gabinete: nome}});
+        const consultarGabinete = await Gabinete.findAll({where:{nome_gabinete: nome}});
         res.status(200).json(consultarGabinete);
     }catch(error){
         console.error(error);

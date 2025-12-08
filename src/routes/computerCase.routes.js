@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/create-computer_case',createGabinete);
 router.get('/search-computer_case',searchGabinete);
-router.get('/search-computer_case/:name',searchNameGabinete);
+router.get('/search-computer_case/:nome',searchNameGabinete);
 router.put('/update-computer_case/:id', updateGabinete);
 router.delete('/delete-computer_case/:id', deleteGabinete);
 
