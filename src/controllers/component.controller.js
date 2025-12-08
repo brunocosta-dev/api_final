@@ -55,3 +55,23 @@ export async function updateComponente(req,res) {
         res.status(500).json({ error: "Falha ao atualizar componentes" });
     }
 }
+
+export async function deleteComponente(req,res) {
+    try{
+        
+        const {id} = req.params;
+        const componenteExistente = await Componente.findByPk(id);
+        
+        if(!componenteExistente){
+            return res.status(404).json({erro: "Componente não encontrado"});
+        }
+
+        await Componente.destroy({where: {id_componente: id}}); 
+
+        res.status(200).json({menssagem: 'Componente deletado com sucesso!'})
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Falha ao deletar componentes" });
+    }
+}
