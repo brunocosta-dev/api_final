@@ -1,15 +1,15 @@
 import { DataTypes } from "sequelize";
 import db from '../config/database.js';
 
-const Category = db.define('category', {
-    id_category:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING(100), unique:true, allowNull: false},
+const Categoria = db.define('categoria', {
+    id_categoria:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    nome_categoria: {type: DataTypes.STRING(100), unique:true, allowNull: false},
 },{
     freezeTableName:true
 });
 
-Category.associate = (models) =>{
-    Category.hasMany(models.Components,{foreignKey: 'id_category', as: 'components'})
+Categoria.associate = (models) =>{
+    Categoria.hasMany(models.Componente,{foreignKey: 'id_categoria', as: 'componente'})
 }
 
-export default Category;
+export default Categoria;

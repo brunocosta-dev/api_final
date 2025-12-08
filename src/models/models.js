@@ -1,12 +1,14 @@
-import Category from './category.model.js';
-import Components from './components.model.js';
+import Categoria from './category.model.js';
+import Componente from './component.model.js';
+import Gabinete from './computerCase.model.js';
+import Equipamento from './equipment.model.js';
 
-const models = {Category,Components};
+const Models = {Categoria,Componente,Gabinete,Equipamento};
 
-Object.values(models).forEach(model => {
+Object.values(Models).forEach(model => {
     if (model.associate){
-        model.associate(models);
+        model.associate(Models);
     }
 });
 
-export default models;
+export default Models;
