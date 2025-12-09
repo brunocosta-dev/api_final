@@ -4,6 +4,7 @@ import db from './config/database.js';
 import Models from './models/models.js';
 import componenteRota from "./routes/component.routes.js"
 import gabineteRota from './routes/computerCase.routes.js'
+import equipamentoRota from './routes/equipment.routes.js'
 
 dotenv.config();
 
@@ -23,3 +24,4 @@ server.listen(PORT, ()=>console.log(`server running at http://localhost:${PORT}`
 
 server.use(componenteRota);
 server.use(gabineteRota);
+server.use(equipamentoRota);
