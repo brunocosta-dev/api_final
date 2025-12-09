@@ -6,7 +6,7 @@ export default class EquipamentoRepository{
     static async create(data){
         return await Equipamento.create(data);
     }
-    static async addComponentesGabinete(idGabinete, componentes, quantidade){
+    static async addComponentesGabinete(idGabinete, componentes, quantidades){
         const compStr = Array.isArray(componentes) ? componentes.join(',') : componentes;
         const qtdeStr = Array.isArray(quantidades) ? quantidades.join(',') : quantidades;
         await db.query('CALL add_componentes_gabinete(:gabinete, :componentes, :quantidades)',{
@@ -20,8 +20,11 @@ export default class EquipamentoRepository{
     static async findAll(){
         return await QtdeComponentes.findAll();
     }
-    static async findById(id){
+    static async findById(id,){
         return await Equipamento.findByPk(id);
+    }
+    static async findByGabineteComponente(idGabinete,idComponente){
+        return await Equipamento.findOne({where:{gabinete:idGabinete,componente:idComponente}});
     }
     static async update(id, data){
         await Equipamento.update(data,{where:{id_componente: id}});

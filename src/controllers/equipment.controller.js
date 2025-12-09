@@ -4,7 +4,8 @@ import EquipamentoRepository from '../repositories/equipment.repository.js';
 export async function createEquipamento(req, res) {
 
    try{
-        const novoEquipamento = await EquipamentoRepository.addComponentesGabinete(req.body);
+    const {gabinete, componentes, quantidades} = req.body    
+    const novoEquipamento = await EquipamentoRepository.addComponentesGabinete(gabinete,componentes,quantidades);
         res.status(201).json({status: "Gabinete adicionado no banco",novoEquipamento});
     }catch(error){
         console.error("Erro ao inserir um novo Equipamento:", error);
@@ -25,16 +26,16 @@ export async function searchEquipamento(req,res) {
 export async function updateEquipamento(req,res) {
     try{
         
-        const {id} = req.params;
-        const EquipamentoExistente = await EquipamentoRepository.findById(id);
+        const {idGabinete,idComponente} = req.params;
+        const EquipamentoExistente = await EquipamentoRepository.findByGabineteComponente(idGabinete,idComponente);
         
         if(!EquipamentoExistente){
             return res.status(404).json({erro: "Equipamento não encontrado"});
         }
 
-        await EquipamentoRepository.update(id, req.body); 
+        await EquipamentoRepository.update(idGabinete,idComponente, req.body); 
 
-        const EquipamentoAtualizado = await EquipamentoRepository.findById(id);
+        const EquipamentoAtualizado = await EquipamentoRepository.findByGabineteComponente(idGabinete,idComponente);
 
         res.status(200).json(EquipamentoAtualizado)
 
