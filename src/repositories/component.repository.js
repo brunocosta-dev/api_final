@@ -1,4 +1,5 @@
 import Componente from '../models/component.model.js';
+import ComponeteCategoria from '../models/componentCategory.model.js';
 import Categoria from '../models/category.model.js'
 
 export default class ComponenteRepository{
@@ -6,7 +7,7 @@ export default class ComponenteRepository{
         return await Componente.create(data);
     }
     static async findAll(){
-        return await Componente.findAll();
+        return await ComponeteCategoria.findAll();
     }
     static async findByName(nome){
         return await Componente.findAll({attributes:['id_componente','nome_componente','desc_componente'],

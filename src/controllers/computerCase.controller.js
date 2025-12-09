@@ -1,10 +1,10 @@
 import { where } from 'sequelize';
-import Gabinete from '../models/computerCase.model.js'
+import GabineteRepository from '../repositories/computerCase.repository.js';
 
 export async function createGabinete(req, res) {
 
    try{
-        const novoGabinete = await Gabinete.create(req.body);
+        const novoGabinete = await GabineteRepository.create(req.body);
         res.status(201).json({status: "Gabinete adicionado no banco",novoGabinete});
     }catch(error){
         console.error("Erro ao inserir um novo Gabinete:", error);
@@ -14,7 +14,7 @@ export async function createGabinete(req, res) {
 
 export async function searchGabinete(req,res) {
     try{
-        const consultarGabinete = await Gabinete.findAll();
+        const consultarGabinete = await GabineteRepository.findAll();
         res.status(200).json(consultarGabinete);
     }catch(error){
         console.error(error);
@@ -38,15 +38,15 @@ export async function updateGabinete(req,res) {
     try{
         
         const {id} = req.params;
-        const GabineteExistente = await Gabinete.findByPk(id);
+        const GabineteExistente = await GabineteRepository.findById(id);
         
         if(!GabineteExistente){
             return res.status(404).json({erro: "Gabinete não encontrado"});
         }
 
-        await Gabinete.update(req.body, {where: {id_Gabinete: id}}); 
+        await GabineteRepository.update(id, req.body); 
 
-        const GabineteAtualizado = await Gabinete.findByPk(id);
+        const GabineteAtualizado = await GabineteRepository.findById(id);
 
         res.status(200).json(GabineteAtualizado)
 
@@ -60,13 +60,13 @@ export async function deleteGabinete(req,res) {
     try{
         
         const {id} = req.params;
-        const GabineteExistente = await Gabinete.findByPk(id);
+        const GabineteExistente = await GabineteRepository.findById(id);
         
         if(!GabineteExistente){
             return res.status(404).json({erro: "Gabinete não encontrado"});
         }
 
-        await Gabinete.destroy({where: {id_Gabinete: id}}); 
+        await GabineteRepository.delete(id); 
 
         res.status(200).json({menssagem: 'Gabinete deletado com sucesso!'})
 
