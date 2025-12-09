@@ -1,10 +1,10 @@
 import { where } from 'sequelize';
-import Componente from '../models/component.model.js'
+import ComponenteRepository from '../repositories/component.repository.js';
 
 export async function createComponente(req, res) {
 
    try{
-        const novoComponente = await Componente.create(req.body);
+        const novoComponente = await ComponenteRepository.create(req.body);
         res.status(201).json({status: "Componente adicionado no banco",novoComponente});
     }catch(error){
         console.error("Erro ao inserir um novo componente:", error);
@@ -14,7 +14,7 @@ export async function createComponente(req, res) {
 
 export async function searchComponente(req,res) {
     try{
-        const consultarComponente = await Componente.findAll();
+        const consultarComponente = await ComponenteRepository.findAll();
         res.status(200).json(consultarComponente);
     }catch(error){
         console.error(error);
@@ -26,7 +26,7 @@ export async function searchNameComponente(req,res) {
     try{
         
         const {nome} = req.params;
-        const consultarComponente = await Componente.findAll({where:{nome_componente: nome}});
+        const consultarComponente = await ComponenteRepository.findByName(nome);
         res.status(200).json(consultarComponente);
     }catch(error){
         console.error(error);
@@ -38,15 +38,15 @@ export async function updateComponente(req,res) {
     try{
         
         const {id} = req.params;
-        const componenteExistente = await Componente.findByPk(id);
+        const componenteExistente = await ComponenteRepository.findById(id);
         
         if(!componenteExistente){
             return res.status(404).json({erro: "Componente não encontrado"});
         }
 
-        await Componente.update(req.body, {where: {id_componente: id}}); 
+        await ComponenteRepository.update(id,req.body); 
 
-        const componenteAtualizado = await Componente.findByPk(id);
+        const componenteAtualizado = await ComponenteRepository.findById(id);
 
         res.status(200).json(componenteAtualizado)
 
@@ -60,13 +60,13 @@ export async function deleteComponente(req,res) {
     try{
         
         const {id} = req.params;
-        const componenteExistente = await Componente.findByPk(id);
+        const componenteExistente = await ComponenteRepository.findById(id);
         
         if(!componenteExistente){
             return res.status(404).json({erro: "Componente não encontrado"});
         }
 
-        await Componente.destroy({where: {id_componente: id}}); 
+        await ComponenteRepository.delete(id); 
 
         res.status(200).json({menssagem: 'Componente deletado com sucesso!'})
 
