@@ -4,7 +4,7 @@ import EquipamentoRepository from '../repositories/equipment.repository.js';
 export async function createEquipamento(req, res) {
 
    try{
-        const novoEquipamento = await EquipamentoRepository.create(req.body);
+        const novoEquipamento = await EquipamentoRepository.addComponentesGabinete(req.body);
         res.status(201).json({status: "Gabinete adicionado no banco",novoEquipamento});
     }catch(error){
         console.error("Erro ao inserir um novo Equipamento:", error);
@@ -19,18 +19,6 @@ export async function searchEquipamento(req,res) {
     }catch(error){
         console.error(error);
         res.status(500).json({ error: "Falha ao consultar Equipamento" });
-    }
-}
-
-export async function searchNameEquipamento(req,res) {
-    try{
-        
-        const {nome} = req.params;
-        const consultarEquipamento = await EquipamentoRepository.findAll(nome);
-        res.status(200).json(consultarEquipamento);
-    }catch(error){
-        console.error(error);
-        res.status(500).json({ error: "Falha ao consultar equipamento" });
     }
 }
 

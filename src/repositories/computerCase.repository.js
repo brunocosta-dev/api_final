@@ -13,6 +13,35 @@ export default class GabineteRepository{
             where: {nome_componente: nome}
         });
     }
+    static async findByCategoriaOuGabinete(nomeGabinete) {
+
+        const sql = `
+            SELECT 
+                gab.nome_gabinete AS gabinete,
+                com.nome_componente AS componente,
+                eq.qtde AS Qtde,
+                cat.nome_categoria AS categoria
+            FROM Categoria cat 
+            INNER JOIN componente com 
+                ON cat.id_categoria = com.categoria
+            INNER JOIN cquipamento eq 
+                ON eq.componente = com.codigo_componente
+            INNER JOIN cabinete gab 
+                ON gab.id_gabinete = eq.gabinete
+            WHERE 
+                (cat.nome_categoria = "Processamento"
+                OR cat.nome_categoria = "Armazenamento")
+            AND gab.nome_gabinete LIKE :gab;
+        `;
+
+        const [result] = await db.query(sql, {
+            replacements: {
+                gab: `%${nomeGabinete}%`
+            }
+        });
+
+        return result;
+    }
     static async findById(id){
         return await Gabinete.findByPk(id);
     }

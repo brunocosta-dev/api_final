@@ -1,17 +1,24 @@
 import Equipamento from "../models/equipment.model.js";
+import QtdeComponentes from "../models/qtdeComponentes.model.js";
+import db from '../config/database.js';
 
 export default class EquipamentoRepository{
     static async create(data){
         return await Equipamento.create(data);
     }
-    static async findAll(){
-        return await Equipamento.findAll();
+    static async addComponentesGabinete(idGabinete, componentes, quantidade){
+        const compStr = Array.isArray(componentes) ? componentes.join(',') : componentes;
+        const qtdeStr = Array.isArray(quantidades) ? quantidades.join(',') : quantidades;
+        await db.query('CALL add_componentes_gabinete(:gabinete, :componentes, :quantidades)',{
+            replacements:{
+                gabinete: idGabinete,
+                componentes: compStr,
+                quantidades: qtdeStr   
+            }
+        })
     }
-    static async findByName(nome){
-        return await Equipamento.findAll({attributes:['id_componente','nome_componente','desc_componente'],
-            include: {model: Categoria, as: 'categoria', attributes: ['nome_categoria']},
-            where: {nome_componente: nome}
-        });
+    static async findAll(){
+        return await QtdeComponentes.findAll();
     }
     static async findById(id){
         return await Equipamento.findByPk(id);

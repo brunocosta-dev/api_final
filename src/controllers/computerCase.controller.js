@@ -34,6 +34,18 @@ export async function searchNameGabinete(req,res) {
     }
 }
 
+export async function searchCategoryGabinete(req,res) {
+    try{
+        
+        const {nome} = req.params;
+        const consultarGabinete = await GabineteRepository.findByCategoriaOuGabinete(nome);
+        res.status(200).json(consultarGabinete);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Falha ao consultar gabinete" });
+    }
+}
+
 export async function updateGabinete(req,res) {
     try{
         

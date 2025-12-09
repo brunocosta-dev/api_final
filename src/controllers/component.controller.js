@@ -34,6 +34,18 @@ export async function searchNameComponente(req,res) {
     }
 }
 
+export async function searchNameGabinete(req,res) {
+    try{
+        
+        const {nome} = req.params;
+        const consultarComponente = await ComponenteRepository.findByGabinete(nome);
+        res.status(200).json(consultarComponente);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Falha ao consultar componentes" });
+    }
+}
+
 export async function updateComponente(req,res) {
     try{
         
